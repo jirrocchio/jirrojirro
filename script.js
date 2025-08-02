@@ -1,24 +1,38 @@
-// Slide logic
 let slides = document.querySelectorAll('.slide');
 let currentIndex = 0;
+let slideInterval;
 
+// Show a specific slide
 function showSlide(index) {
   slides.forEach((slide, i) => {
     slide.classList.remove('active');
     if (i === index) slide.classList.add('active');
   });
+
+  // Pause auto-slideshow if current slide contains a video
+  const currentSlide = slides[index];
+  const video = currentSlide.querySelector('video');
+
+  if (video) {
+    clearInterval(slideInterval); // Stop auto slide
+    video.play(); // Optionally play the video
+  }
 }
 
+// Move to the next slide
 function nextSlide() {
   currentIndex = (currentIndex + 1) % slides.length;
   showSlide(currentIndex);
 }
 
-// Initialize
-showSlide(currentIndex);
-setInterval(nextSlide, 5000);
+// Start auto slideshow
+function startSlideshow() {
+  slideInterval = setInterval(() => {
+    nextSlide();
+  }, 5000);
+}
 
-// Music toggle logic
+// === Music Toggle ===
 const bgMusic = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
 
@@ -32,12 +46,21 @@ musicToggle.addEventListener("click", () => {
   }
 });
 
-// Enable autoplay after user gesture
+// === Attempt Autoplay + Unlock on Tap ===
+window.addEventListener('load', () => {
+  bgMusic.play().catch(() => {
+    console.log("Autoplay blocked until user interacts.");
+  });
+});
+
 document.body.addEventListener('click', () => {
   if (bgMusic.paused) {
     bgMusic.play().catch(() => {
-      console.log("Autoplay failed until user interaction.");
+      console.log("Still blocked — manual toggle required.");
     });
   }
 }, { once: true });
 
+// === Initialize Slideshow ===
+showSlide(currentIndex);
+startSlideshow();

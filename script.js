@@ -1,4 +1,8 @@
-let slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll('.slide');
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+const restartBtn = document.getElementById("restartBtn");
+
 let currentIndex = 0;
 let slideInterval;
 
@@ -9,20 +13,33 @@ function showSlide(index) {
     if (i === index) slide.classList.add('active');
   });
 
-  // Pause auto-slideshow if current slide contains a video
   const currentSlide = slides[index];
   const video = currentSlide.querySelector('video');
 
+  // Stop slideshow if this is the last slide (final video)
+  if (index === slides.length - 1 && video) {
+    clearInterval(slideInterval);
+    restartBtn.style.display = 'inline-block';
+  } else {
+    restartBtn.style.display = 'none';
+  }
+
+  // Autoplay video (optional)
   if (video) {
-    clearInterval(slideInterval); // Stop auto slide
-    video.play(); // Optionally play the video
+    video.play().catch(() => {
+      console.log("Video autoplay blocked.");
+    });
   }
 }
 
 // Move to the next slide
 function nextSlide() {
-  currentIndex = (currentIndex + 1) % slides.length;
-  showSlide(currentIndex);
+  currentIndex++;
+  if (currentIndex < slides.length) {
+    showSlide(currentIndex);
+  } else {
+    clearInterval(slideInterval);
+  }
 }
 
 // Start auto slideshow
@@ -32,10 +49,15 @@ function startSlideshow() {
   }, 5000);
 }
 
-// === Music Toggle ===
-const bgMusic = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
+// Restart button logic
+restartBtn?.addEventListener('click', () => {
+  currentIndex = 0;
+  showSlide(currentIndex);
+  startSlideshow();
+  restartBtn.style.display = 'none';
+});
 
+// === Music Toggle ===
 musicToggle.addEventListener("click", () => {
   if (bgMusic.paused) {
     bgMusic.play();
@@ -46,7 +68,7 @@ musicToggle.addEventListener("click", () => {
   }
 });
 
-// === Attempt Autoplay + Unlock on Tap ===
+// === Autoplay Fallback for Music ===
 window.addEventListener('load', () => {
   bgMusic.play().catch(() => {
     console.log("Autoplay blocked until user interacts.");
@@ -61,6 +83,6 @@ document.body.addEventListener('click', () => {
   }
 }, { once: true });
 
-// === Initialize Slideshow ===
+// === Initialize ===
 showSlide(currentIndex);
 startSlideshow();

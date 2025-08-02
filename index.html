@@ -11,8 +11,7 @@
   <!-- Heart Background Animation -->
   <div class="hearts"></div>
 
-  <!-- Music Toggle Button -->
-  <button id="musicToggle">🔊</button>
+  <!-- Music Element -->
   <audio id="bgMusic" autoplay loop>
     <source src="music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -80,22 +79,26 @@
     </div>
 
     <div class="slide" id="final-slide">
-  <div class="image-container">
-    <video src="michaela_clip2.mp4" controls playsinline></video>
-  </div>
-  <p>Remember always choose to be happy, I always mesmerized by your beauty!❤️</p>
-
-  <!-- Romantic restart message -->
-  <p id="restartMsg">Click here to relive the love 💖</p>
-
-  <!-- Restart button -->
-  <button id="restartBtn">🔁 Restart Slideshow</button>
-</div>
-
-
-
+      <div class="image-container">
+        <video src="michaela_clip2.mp4" controls playsinline></video>
+      </div>
+      <p>Remember always choose to be happy, I always mesmerized by your eyes❤️</p>
+      <p id="restartMsg">Click here to relive the love 💖</p>
+      <button id="restartBtn">🔁 Restart Slideshow</button>
+    </div>
 
   </div>
+
+  <!-- Footer Music Control -->
+  <footer style="margin-top: 20px;">
+    <button id="musicToggle">🔊</button>
+    <p style="color: #c2185b; font-size: 0.9rem;">Click to turn on the music</p>
+    <!-- Peach and Goma GIFs -->
+    <div class="peach-goma-container" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
+      <img src="peach-and-goma-peach-goma.gif" alt="Peach gif" style="width: 100px; height: auto; border-radius: 10px;">
+      <img src="peachy-wave.gif" alt="Goma gif" style="width: 100px; height: auto; border-radius: 10px;">
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>

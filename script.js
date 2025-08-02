@@ -1,92 +1,72 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const slides = document.querySelectorAll('.slide');
-  const bgMusic = document.getElementById("bgMusic");
-  const musicToggle = document.getElementById("musicToggle");
-  const restartBtn = document.getElementById("restartBtn");
-  const restartMsg = document.getElementById("restartMsg");
+let slideIndex = 0;
+let slides = document.querySelectorAll(".slide");
+let interval;
 
-  let currentIndex = 0;
-  let slideInterval;
+// Show one slide at a time
+function showSlide(index) {
+  slides.forEach((slide) => slide.classList.remove("active"));
+  if (index < slides.length) {
+    slides[index].classList.add("active");
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove('active');
-      if (i === index) slide.classList.add('active');
-    });
-
-    const currentSlide = slides[index];
-    const video = currentSlide.querySelector('video');
-
-    if (index === slides.length - 1 && video) {
-      clearInterval(slideInterval);
-      restartBtn.style.display = 'inline-block';
-      restartMsg.style.display = 'block';
-
-      setTimeout(() => {
-        restartBtn.classList.add('fade-in');
-      }, 500);
-    } else {
-      restartBtn.style.display = 'none';
-      restartMsg.style.display = 'none';
-      restartBtn.classList.remove('fade-in');
-    }
-
+    // Pause auto if slide contains video
+    const video = slides[index].querySelector("video");
     if (video) {
-      video.play().catch(() => {
-        console.log("Video autoplay blocked.");
+      clearInterval(interval);
+      video.addEventListener("ended", () => {
+        slideIndex++;
+        showSlide(slideIndex);
+        autoPlay();
       });
     }
   }
 
-  function nextSlide() {
-    currentIndex++;
-    if (currentIndex < slides.length) {
-      showSlide(currentIndex);
-    } else {
-      clearInterval(slideInterval);
-    }
+  // If it's the last slide, show restart button
+  if (index === slides.length - 1) {
+    const restartBtn = document.getElementById("restartBtn");
+    restartBtn.classList.add("fade-in");
   }
+}
 
-  function startSlideshow() {
-    slideInterval = setInterval(() => {
-      nextSlide();
-    }, 5000);
+// Auto play slides
+function autoPlay() {
+  interval = setInterval(() => {
+    slideIndex++;
+    if (slideIndex >= slides.length) {
+      clearInterval(interval);
+      return;
+    }
+    showSlide(slideIndex);
+  }, 5000);
+}
+
+// Music toggle
+const musicToggle = document.getElementById("musicToggle");
+const bgMusic = document.getElementById("bgMusic");
+
+musicToggle.addEventListener("click", () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicToggle.textContent = "🔊";
+  } else {
+    bgMusic.pause();
+    musicToggle.textContent = "🔈";
   }
+});
 
-  restartBtn?.addEventListener('click', () => {
-    currentIndex = 0;
-    showSlide(currentIndex);
-    startSlideshow();
-    restartBtn.style.display = 'none';
-    restartMsg.style.display = 'none';
-    restartBtn.classList.remove('fade-in');
-  });
+// Start slideshow on button click
+document.getElementById("startSlideshowBtn").addEventListener("click", () => {
+  document.getElementById("startContainer").style.display = "none";
+  document.querySelector(".slideshow-container").style.display = "block";
+  slides = document.querySelectorAll(".slide");
+  slideIndex = 0;
+  showSlide(slideIndex);
+  autoPlay();
+});
 
-  musicToggle.addEventListener("click", () => {
-    if (bgMusic.paused) {
-      bgMusic.play();
-      musicToggle.textContent = "🔊";
-    } else {
-      bgMusic.pause();
-      musicToggle.textContent = "🔇";
-    }
-  });
-
-  window.addEventListener('load', () => {
-    bgMusic.play().catch(() => {
-      console.log("Autoplay blocked until user interacts.");
-    });
-  });
-
-  document.body.addEventListener('click', () => {
-    if (bgMusic.paused) {
-      bgMusic.play().catch(() => {
-        console.log("Still blocked — manual toggle required.");
-      });
-    }
-  }, { once: true });
-
-  // Start everything
-  showSlide(currentIndex);
-  startSlideshow();
+// Restart button
+document.getElementById("restartBtn").addEventListener("click", () => {
+  slideIndex = 0;
+  showSlide(slideIndex);
+  autoPlay();
+  document.getElementById("restartBtn").classList.remove("fade-in");
 });

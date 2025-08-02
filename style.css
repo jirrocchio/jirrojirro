@@ -1,80 +1,69 @@
-/* === Base Setup === */
+/* Basic Reset and Body Styling */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Georgia', serif;
-  background: linear-gradient(to bottom right, #ffe0ec, #fff0f5);
-  overflow-x: hidden;
+  background: linear-gradient(to bottom, #ffe4e1, #ffc1cc);
+  font-family: 'Arial', sans-serif;
   text-align: center;
+  overflow-x: hidden;
 }
 
-/* === Romantic Title === */
+/* Romantic Title */
 .title {
   font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
-  color: #c2185b;
-  margin-top: 1rem;
-  padding: 0 1rem;
+  font-size: 2.8rem;
+  color: #d81b60;
+  margin-top: 20px;
 }
 
-/* === Slideshow Container === */
+/* Slideshow Container */
 .slideshow-container {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 20px 15px;
   position: relative;
-  box-sizing: border-box;
+  width: 90%;
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #fff0f5;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+  padding: 20px;
 }
 
-/* === Individual Slide === */
+/* Slides */
 .slide {
   display: none;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff6f9;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-  padding: 15px;
-  margin-top: 20px;
-  animation: fade 2s;
 }
 
 .slide.active {
-  display: flex;
+  display: block;
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* === Image/Video Container === */
+/* Image and Video Container */
 .image-container {
-  width: 85vw;
-  max-width: 280px;
-  height: 85vw;
-  max-height: 280px;
-  border-radius: 20px;
+  width: 100%;
+  height: auto;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+  border-radius: 20px;
   margin-bottom: 15px;
 }
 
 .image-container img,
 .image-container video {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   border-radius: 20px;
 }
 
-/* === Slide Text === */
-.slide p {
+/* Paragraph Text */
+p {
   font-size: 1.1rem;
-  color: #c2185b;
-  padding: 0 10px;
+  color: #880e4f;
+  margin: 10px 0;
 }
 
-/* === Music Toggle Button === */
+/* Music Button Styling */
 #musicToggle {
-  position: center;
-  top: 15px;
-  right: 15px;
   background-color: #ff80ab;
   border: none;
   padding: 10px 14px;
@@ -82,65 +71,10 @@ body {
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-  z-index: 99;
+  margin-bottom: 5px;
 }
 
-/* === Floating Hearts === */
-.hearts::before,
-.hearts::after {
-  content: \"💗💓💖💞💕\";
-  position: fixed;
-  font-size: 1.4rem;
-  animation: float 20s linear infinite;
-  left: 5%;
-  top: 30%;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(100vh);
-  }
-  100% {
-    transform: translateY(-100vh);
-  }
-}
-
-/* === Fade Effect for Slide === */
-@keyframes fade {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* === Mobile Optimization === */
-@media (max-width: 400px) {
-  .slide p {
-    font-size: 1rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
-  }
-
-  #musicToggle {
-    font-size: 18px;
-    padding: 8px 12px;
-  }
-}
-
-/* === Fade-in animation for Restart Button === */
-#restartMsg {
-  font-size: 0.95rem;
-  color: #c2185b;
-  margin-top: 10px;
-  display: none;
-}
-
+/* Restart Button Styling */
 #restartBtn {
   background-color: #ff80ab;
   color: white;
@@ -152,12 +86,51 @@ body {
   box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
   opacity: 0;
   transition: opacity 1s ease;
-  display: none;
-  margin-top: 10px;
 }
 
 #restartBtn.fade-in {
   opacity: 1;
-  display: inline-block;
 }
 
+/* Animation for Slideshow Fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Floating & glowing animation for Peach and Goma */
+.peach-goma-container img {
+  animation: floatSoft 6s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+  border-radius: 10px;
+}
+
+@keyframes floatSoft {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.4), 0 0 20px rgba(255, 182, 193, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.6), 0 0 30px rgba(255, 182, 193, 0.5);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+  .slideshow-container {
+    width: 95%;
+    padding: 15px;
+  }
+}

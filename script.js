@@ -2,6 +2,7 @@ const slides = document.querySelectorAll('.slide');
 const bgMusic = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
 const restartBtn = document.getElementById("restartBtn");
+const restartMsg = document.getElementById("restartMsg");
 
 let currentIndex = 0;
 let slideInterval;
@@ -16,15 +17,21 @@ function showSlide(index) {
   const currentSlide = slides[index];
   const video = currentSlide.querySelector('video');
 
-  // Stop slideshow if this is the last slide (final video)
+  // Stop slideshow and show restart on final slide
   if (index === slides.length - 1 && video) {
     clearInterval(slideInterval);
     restartBtn.style.display = 'inline-block';
+    restartMsg.style.display = 'block';
+    // Delay fade-in for dramatic effect
+    setTimeout(() => {
+      restartBtn.classList.add('fade-in');
+    }, 500);
   } else {
     restartBtn.style.display = 'none';
+    restartMsg.style.display = 'none';
+    restartBtn.classList.remove('fade-in');
   }
 
-  // Autoplay video (optional)
   if (video) {
     video.play().catch(() => {
       console.log("Video autoplay blocked.");
@@ -32,7 +39,7 @@ function showSlide(index) {
   }
 }
 
-// Move to the next slide
+// Move to next slide
 function nextSlide() {
   currentIndex++;
   if (currentIndex < slides.length) {
@@ -42,22 +49,24 @@ function nextSlide() {
   }
 }
 
-// Start auto slideshow
+// Start slideshow
 function startSlideshow() {
   slideInterval = setInterval(() => {
     nextSlide();
   }, 5000);
 }
 
-// Restart button logic
+// Restart logic
 restartBtn?.addEventListener('click', () => {
   currentIndex = 0;
   showSlide(currentIndex);
   startSlideshow();
   restartBtn.style.display = 'none';
+  restartMsg.style.display = 'none';
+  restartBtn.classList.remove('fade-in');
 });
 
-// === Music Toggle ===
+// Music toggle
 musicToggle.addEventListener("click", () => {
   if (bgMusic.paused) {
     bgMusic.play();
@@ -68,7 +77,7 @@ musicToggle.addEventListener("click", () => {
   }
 });
 
-// === Autoplay Fallback for Music ===
+// Music autoplay fallback
 window.addEventListener('load', () => {
   bgMusic.play().catch(() => {
     console.log("Autoplay blocked until user interacts.");
@@ -83,6 +92,6 @@ document.body.addEventListener('click', () => {
   }
 }, { once: true });
 
-// === Initialize ===
+// Init
 showSlide(currentIndex);
 startSlideshow();

@@ -40,3 +40,21 @@ document.body.addEventListener('click', () => {
     });
   }
 }, { once: true });
+
+// Attempt autoplay directly
+window.addEventListener('load', () => {
+  const bgMusic = document.getElementById("bgMusic");
+  bgMusic.play().catch(() => {
+    console.log("Autoplay blocked until user interacts.");
+  });
+});
+
+// Unlock autoplay on first interaction
+document.body.addEventListener('click', () => {
+  const bgMusic = document.getElementById("bgMusic");
+  if (bgMusic.paused) {
+    bgMusic.play().catch(() => {
+      console.log("Still blocked — user may need to press play.");
+    });
+  }
+}, { once: true });

@@ -1,4 +1,4 @@
-/* Global */
+/* === Base Setup === */
 body {
   margin: 0;
   padding: 0;
@@ -8,6 +8,7 @@ body {
   text-align: center;
 }
 
+/* === Romantic Title === */
 .title {
   font-family: 'Great Vibes', cursive;
   font-size: 2rem;
@@ -16,6 +17,7 @@ body {
   padding: 0 1rem;
 }
 
+/* === Slideshow Container === */
 .slideshow-container {
   max-width: 420px;
   margin: 0 auto;
@@ -24,6 +26,7 @@ body {
   box-sizing: border-box;
 }
 
+/* === Individual Slide === */
 .slide {
   display: none;
   flex-direction: column;
@@ -40,6 +43,7 @@ body {
   display: flex;
 }
 
+/* === Image/Video Container === */
 .image-container {
   width: 85vw;
   max-width: 280px;
@@ -51,18 +55,7 @@ body {
   margin-bottom: 15px;
 }
 
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.slide p {
-  font-size: 1.1rem;
-  color: #c2185b;
-  padding: 0 10px;
-}
-
+.image-container img,
 .image-container video {
   width: 100%;
   height: 100%;
@@ -70,9 +63,16 @@ body {
   border-radius: 20px;
 }
 
-/* Music Toggle Button */
+/* === Slide Text === */
+.slide p {
+  font-size: 1.1rem;
+  color: #c2185b;
+  padding: 0 10px;
+}
+
+/* === Music Toggle Button === */
 #musicToggle {
-  position: center;
+  position: fixed;
   top: 15px;
   right: 15px;
   background-color: #ff80ab;
@@ -85,7 +85,7 @@ body {
   z-index: 99;
 }
 
-/* Floating hearts animation */
+/* === Floating Hearts === */
 .hearts::before,
 .hearts::after {
   content: "💗💓💖💞💕";
@@ -99,17 +99,25 @@ body {
 }
 
 @keyframes float {
-  0% { transform: translateY(100vh); }
-  100% { transform: translateY(-100vh); }
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(-100vh);
+  }
 }
 
-/* Fade effect */
+/* === Fade Effect === */
 @keyframes fade {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Media Queries for Very Small Screens */
+/* === Mobile Optimization === */
 @media (max-width: 400px) {
   .slide p {
     font-size: 1rem;

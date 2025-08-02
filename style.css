@@ -88,7 +88,7 @@ body {
 /* === Floating Hearts === */
 .hearts::before,
 .hearts::after {
-  content: "💗💓💖💞💕";
+  content: \"💗💓💖💞💕\";
   position: fixed;
   font-size: 1.4rem;
   animation: float 20s linear infinite;
@@ -107,7 +107,7 @@ body {
   }
 }
 
-/* === Fade Effect === */
+/* === Fade Effect for Slide === */
 @keyframes fade {
   from {
     opacity: 0.4;
@@ -133,6 +133,14 @@ body {
   }
 }
 
+/* === Fade-in animation for Restart Button === */
+#restartMsg {
+  font-size: 0.95rem;
+  color: #c2185b;
+  margin-top: 10px;
+  display: none;
+}
+
 #restartBtn {
   background-color: #ff80ab;
   color: white;
@@ -142,10 +150,14 @@ body {
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+  opacity: 0;
   transition: opacity 1s ease;
+  display: none;
+  margin-top: 10px;
 }
 
 #restartBtn.fade-in {
   opacity: 1;
+  display: inline-block;
 }
 
